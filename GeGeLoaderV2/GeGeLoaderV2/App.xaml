@@ -4,6 +4,106 @@
              xmlns:local="clr-namespace:GeGeLoaderV2"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary.MergedDictionaries>
+            <!-- Theme dictionaries will be added here by App.xaml.cs -->
+        </ResourceDictionary.MergedDictionaries>
+
+        <!-- Placeholder Brushes for Dynamic Update -->
+        <SolidColorBrush x:Key="PrimaryHueBrush" Color="#FF4081FF" /> <!-- Default Pink -->
+        <SolidColorBrush x:Key="AccentHueBrush" Color="#FFFFFFFF" />   <!-- Default White -->
+
+        <!-- These brushes will be overridden by loaded theme dictionary but provide design-time values and fallbacks -->
+        <SolidColorBrush x:Key="AppBackgroundBrush" Color="#AA000000"/>
+        <SolidColorBrush x:Key="PageBackgroundBrush" Color="Transparent"/>
+        <SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="#88000000"/>
+        <SolidColorBrush x:Key="TextColorBrush" Color="#E0E0E0"/>
+        <SolidColorBrush x:Key="GlassBackgroundBrush" Color="#20FFFFFF"/>
+        <SolidColorBrush x:Key="GlassBorderBrush" Color="#50FFFFFF"/>
+
+        <!-- Animation for buttons -->
+        <Storyboard x:Key="ButtonHoverAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.8" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1.05" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.05" Duration="0:0:0.2" />
+        </Storyboard>
+
+        <Storyboard x:Key="ButtonLeaveAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1" Duration="0:0:0.2" />
+        </Storyboard>
+
+        <Storyboard x:Key="ButtonPressedAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="0.95" Duration="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="0.95" Duration="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.7" Duration="0:0:0.1"/>
+        </Storyboard>
+
+        <!-- Button Style -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource PrimaryHueBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentHueBrush}"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard Storyboard="{StaticResource ButtonHoverAnimation}"/>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard Storyboard="{StaticResource ButtonLeaveAnimation}"/>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="PreviewMouseDown">
+                    <BeginStoryboard Storyboard="{StaticResource ButtonPressedAnimation}"/>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Glass Border Style -->
+        <Style x:Key="GlassBorder" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource GlassBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource GlassBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+
+        <!-- Glass TextBlock Style -->
+        <Style x:Key="GlassTextBlock" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="1" BlurRadius="2" Opacity="0.5" Color="Black"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Glass CheckBox Style -->
+        <Style x:Key="GlassCheckBox" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource GlassBorderBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource GlassBackgroundBrush}"/>
+            <Setter Property="Padding" Value="5,0,0,0"/>
+        </Style>
+
     </Application.Resources>
 </Application>

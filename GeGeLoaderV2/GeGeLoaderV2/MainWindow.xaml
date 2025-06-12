@@ -10,140 +10,38 @@
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="CanMinimize">
-    
-    <Window.Resources>
-        <!-- Animation for buttons -->
-        <Storyboard x:Key="ButtonHoverAnimation">
-            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.8" Duration="0:0:0.2" />
-            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1.05" Duration="0:0:0.2" />
-            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.05" Duration="0:0:0.2" />
-        </Storyboard>
-        
-        <Storyboard x:Key="ButtonLeaveAnimation">
-            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
-            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1" Duration="0:0:0.2" />
-            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1" Duration="0:0:0.2" />
-        </Storyboard>
-        
-        <!-- Button Style -->
-        <Style x:Key="ModernButton" TargetType="Button">
-            <Setter Property="Background" Value="#FF4081"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="15,10"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
-            <Setter Property="RenderTransform">
-                <Setter.Value>
-                    <ScaleTransform ScaleX="1" ScaleY="1"/>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                                CornerRadius="10" 
-                                BorderThickness="{TemplateBinding BorderThickness}" 
-                                BorderBrush="{TemplateBinding BorderBrush}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <EventTrigger RoutedEvent="MouseEnter">
-                    <BeginStoryboard Storyboard="{StaticResource ButtonHoverAnimation}"/>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <BeginStoryboard Storyboard="{StaticResource ButtonLeaveAnimation}"/>
-                </EventTrigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
-    
-    <Border CornerRadius="20" Background="#202020" Margin="10">
+
+    <Border CornerRadius="20" Background="{DynamicResource AppBackgroundBrush}" Margin="10">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" ShadowDepth="2" Color="#202020"/>
+            <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" ShadowDepth="2" Color="#88000000"/>
         </Border.Effect>
-        
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            
+
             <!-- Title Bar -->
-            <Border Background="#303030" CornerRadius="20,20,0,0">
+            <Border Background="{DynamicResource TitleBarBackgroundBrush}" CornerRadius="20,20,0,0">
                 <Grid>
-                    <TextBlock Text="GeGe Loader V2" FontSize="16" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                    <TextBlock Text="GeGe Loader V2" Style="{StaticResource GlassTextBlock}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Margin="20,0,0,0"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button x:Name="btnMinimize" Content="_" Width="40" Height="30" Background="Transparent" Foreground="White" BorderThickness="0" Click="btnMinimize_Click"/>
-                        <Button x:Name="btnClose" Content="X" Width="40" Height="30" Background="Transparent" Foreground="White" BorderThickness="0" Click="btnClose_Click"/>
+                        <Button x:Name="btnMinimize" Content="_" Width="40" Height="30" Background="Transparent" Foreground="{DynamicResource TextColorBrush}" BorderThickness="0" Click="btnMinimize_Click"/>
+                        <Button x:Name="btnClose" Content="X" Width="40" Height="30" Background="Transparent" Foreground="{DynamicResource TextColorBrush}" BorderThickness="0" Click="btnClose_Click"/>
                     </StackPanel>
                 </Grid>
             </Border>
-            
-            <!-- Main Content -->
-            <Grid Grid.Row="1" Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                
-                <!-- Process Selection -->
-                <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                    <TextBlock Text="Select Process" Foreground="White" FontSize="14" Margin="0,0,0,10"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Background="#404040" CornerRadius="10" Padding="10,5">
-                            <TextBlock x:Name="txtSelectedProcess" Text="No process selected" Foreground="#AAAAAA" VerticalAlignment="Center"/>
-                        </Border>
-                        <Button Grid.Column="1" Content="CS:GO" Style="{StaticResource ModernButton}" Margin="10,0,0,0" Click="btnRefreshCsgoProcess_Click"/>
-                        <Button Grid.Column="2" Content="Steam" Style="{StaticResource ModernButton}" Margin="10,0,0,0" Click="btnRefreshSteamProcess_Click"/>
-                    </Grid>
-                </StackPanel>
-                
-                <!-- DLL Selection -->
-                <StackPanel Grid.Row="1">
-                    <TextBlock Text="Select DLL to Inject" Foreground="White" FontSize="14" Margin="0,0,0,10"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Background="#404040" CornerRadius="10" Padding="10,5">
-                            <TextBlock x:Name="txtSelectedDll" Text="No DLL selected" Foreground="#AAAAAA" VerticalAlignment="Center"/>
-                        </Border>
-                        <Button Grid.Column="1" Content="Browse" Style="{StaticResource ModernButton}" Margin="10,0,0,0" Click="btnBrowseDll_Click"/>
-                    </Grid>
-                    
-                    <!-- Auto-Inject Option -->
-                    <CheckBox x:Name="chkAutoInject" Content="Auto-inject when game starts" Foreground="White" Margin="0,15,0,0"/>
-                    
-                    <!-- Status Panel -->
-                    <Border Background="#404040" CornerRadius="10" Margin="0,20,0,0" Padding="15">
-                        <StackPanel>
-                            <TextBlock Text="Status" Foreground="White" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
-                            <TextBlock x:Name="txtStatus" Text="Ready" Foreground="#AAAAAA" TextWrapping="Wrap"/>
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
-            </Grid>
-            
-            <!-- Bottom Bar with Buttons -->
-            <Grid Grid.Row="2" Margin="20,0,20,15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="btnStartGame" Content="START GAME" Style="{StaticResource ModernButton}" Height="40" FontSize="16" FontWeight="Bold" Margin="0,0,5,0" Click="btnStartGame_Click"/>
-                <Button Grid.Column="1" x:Name="btnInject" Content="INJECT" Style="{StaticResource ModernButton}" Height="40" FontSize="16" FontWeight="Bold" Margin="5,0,0,0" Click="btnInject_Click"/>
-            </Grid>
+
+            <!-- Navigation Host -->
+            <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Margin="20" Background="{DynamicResource PageBackgroundBrush}"/>
+
+            <!-- Navigation Bar -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+                <Button x:Name="btnNavMain" Content="Main" Style="{StaticResource ModernButton}" Margin="5"/>
+                <Button x:Name="btnNavSettings" Content="Settings" Style="{StaticResource ModernButton}" Margin="5"/>
+            </StackPanel>
         </Grid>
     </Border>
 </Window>

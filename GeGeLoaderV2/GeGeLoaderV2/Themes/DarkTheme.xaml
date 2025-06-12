@@ -1,0 +1,15 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="AppBackgroundColor">#000000</Color>
+    <Color x:Key="TitleBarBackgroundColor">#000000</Color>
+    <Color x:Key="TextColor">#E0E0E0</Color>
+    <Color x:Key="GlassBackgroundColor">#FFFFFF</Color>
+    <Color x:Key="GlassBorderColor">#FFFFFF</Color>
+
+    <SolidColorBrush x:Key="AppBackgroundBrush" Color="{StaticResource AppBackgroundColor}" Opacity="0.66"/>
+    <SolidColorBrush x:Key="PageBackgroundBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="{StaticResource TitleBarBackgroundColor}" Opacity="0.53"/>
+    <SolidColorBrush x:Key="TextColorBrush" Color="{StaticResource TextColor}"/>
+    <SolidColorBrush x:Key="GlassBackgroundBrush" Color="{StaticResource GlassBackgroundColor}" Opacity="0.125"/>
+    <SolidColorBrush x:Key="GlassBorderBrush" Color="{StaticResource GlassBorderColor}" Opacity="0.3125"/>
+</ResourceDictionary>
